@@ -12,9 +12,9 @@
         <main class="container">
             <section class="card form-card">
                 <h2 class="title">Cadastro de médico</h2>
-
                 <form method="post" action="#" th:action="@{/medicos}" th:object="${dados}">
                     <input type="hidden" name="id" th:field="*{id}">
+                    <input type="hidden" name="${\_csrf.parameterName}" value="${\_csrf.token}"/>
 
                     <div class="form-group">
                         <label for="nome">Nome:</label>
