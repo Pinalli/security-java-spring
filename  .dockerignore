@@ -1,0 +1,61 @@
+# Arquivos e diretórios Maven
+target/
+!target/*.jar
+*.class
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+logs/
+
+# Arquivos de IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Arquivos de ambiente e configuração local
+.env
+.env.local
+*.properties.local
+application-local.properties
+application-local.yml
+
+# Arquivos de teste e documentação
+README.md
+CHANGELOG.md
+LICENSE
+*.md
+test/
+docs/
+
+# Arquivos Git
+.git/
+.gitignore
+.gitattributes
+
+# Arquivos temporários
+tmp/
+temp/
+*.tmp
+*~
+
+# Arquivos de build e dependências
+node_modules/
+bower_components/
+dist/
+build/
+bin/

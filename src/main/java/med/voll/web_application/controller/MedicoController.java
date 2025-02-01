@@ -5,7 +5,7 @@ import med.voll.web_application.domain.RegraDeNegocioException;
 import med.voll.web_application.domain.medico.DadosCadastroMedico;
 import med.voll.web_application.domain.medico.DadosListagemMedico;
 import med.voll.web_application.domain.medico.Especialidade;
-import med.voll.web_application.domain.medico.MedicoService;
+import med.voll.web_application.service.MedicoService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;

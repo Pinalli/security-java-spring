@@ -1,7 +1,10 @@
-package med.voll.web_application.domain.medico;
+package med.voll.web_application.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import med.voll.web_application.domain.RegraDeNegocioException;
+import med.voll.web_application.domain.medico.*;
+import med.voll.web_application.repository.MedicoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,9 +15,11 @@ import java.util.List;
 public class MedicoService {
 
     private final MedicoRepository repository;
+    private final UsuarioService   usuarioService;;
 
-    public MedicoService(MedicoRepository repository) {
+    public MedicoService(MedicoRepository repository, UsuarioService usuarioService) {
         this.repository = repository;
+        this.usuarioService = usuarioService;
     }
 
     public Page<DadosListagemMedico> listar(Pageable paginacao) {
@@ -29,11 +34,15 @@ public class MedicoService {
 
         if (dados.id() == null) {
             repository.save(new Medico(dados));
+            usuarioService.cadastrarUsuario(dados.nome(), dados.email(), dados.crm());
         } else {
-            var medico = repository.findById(dados.id()).orElseThrow();
+            var medico = repository.findById(dados.id())
+                    .orElseThrow(() -> new EntityNotFoundException("Médico não encontrado para atualização."));
+
             medico.atualizarDados(dados);
         }
     }
+
 
     public DadosCadastroMedico carregarPorId(Long id) {
         var medico = repository.findById(id).orElseThrow();

@@ -1,5 +1,7 @@
-package med.voll.web_application.domain.medico;
+package med.voll.web_application.repository;
 
+import med.voll.web_application.domain.medico.Especialidade;
+import med.voll.web_application.domain.medico.Medico;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

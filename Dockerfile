@@ -1,27 +1,34 @@
-FROM eclipse-temurin:17-jdk AS build
+# Etapa de build
+FROM eclipse-temurin:21-jdk-alpine AS build
 WORKDIR /app
 
-# Copia os arquivos do projeto para dentro do container
-COPY .mvn/ ./.mvn/
-COPY mvnw .
-COPY pom.xml .
+# Copia apenas arquivos essenciais para otimizar cache
+COPY pom.xml mvnw ./
+COPY .mvn .mvn
+
+# Baixar dependências antes de copiar código-fonte
+RUN ./mvnw -B dependency:go-offline
+
+# Agora, copia o código-fonte
 COPY src ./src
-# Tornar o mvnw executável e fazer o build
-RUN chmod +x mvnw
-RUN ./mvnw clean package -DskipTests
-# Cria uma imagem final para rodar a aplicação
-FROM eclipse-temurin:17-jdk
+
+# Compila a aplicação
+RUN ./mvnw -B clean package -DskipTests
+
+# Etapa final - apenas o necessário para rodar a aplicação
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-# Copia o JAR gerado na etapa anterior
+# Copia apenas o JAR gerado
 COPY --from=build /app/target/*.jar app.jar
 
-# Define as variáveis de ambiente para conexão com o MySQL
+# Definir variáveis de ambiente (evite definir senhas diretamente aqui)
 ENV SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/vollmed_web?createDatabaseIfNotExist
 ENV SPRING_DATASOURCE_USERNAME=root
 ENV SPRING_DATASOURCE_PASSWORD=root
-# Expondo a porta da aplicação
+
+# Expor a porta
 EXPOSE 8080
 
-# Comando para iniciar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Comando de execução
+CMD ["java", "-jar", "app.jar"]

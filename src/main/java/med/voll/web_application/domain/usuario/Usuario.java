@@ -44,7 +44,9 @@ public class Usuario implements UserDetails {
         return senha;
     }
 
-
-
-
+    public Usuario(String senha, String email, String nome) {
+        this.senha = senha;
+        this.email = email;
+        this.nome = nome;
+    }
 }

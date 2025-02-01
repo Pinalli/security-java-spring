@@ -1,7 +1,7 @@
 package med.voll.web_application.domain.consulta;
 
 import jakarta.transaction.Transactional;
-import med.voll.web_application.domain.medico.MedicoRepository;
+import med.voll.web_application.repository.MedicoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
